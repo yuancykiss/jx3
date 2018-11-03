@@ -5,4 +5,6 @@ from django.shortcuts import render
 
 def index(request):
     if request.method == 'GET':
-        return HttpResponse('this is index page')
+        return render(request, 'index.html')
+        # return HttpResponse('this is index page')
+
