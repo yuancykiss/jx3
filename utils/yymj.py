@@ -1,3 +1,6 @@
+import re
+
+import pymysql as pymysql
 import requests
 
 from lxml import etree
@@ -32,11 +35,21 @@ def pares_html(content):
         result_war = etree_html.xpath('//table//tr[' + str(i) + ']/td[3]/img/@src')
         if not result_war:
             result_war = etree_html.xpath('//table//tr[' + str(i) + ']/td[3]/text()')
-        war.append(result_war)
+        for item in result_war:
+            result_wars = re.findall(r'.*?(\w{2}).gif', item)
+            if not result_wars:
+                result_wars = ['中立']
+            elif result_wars[0] == 'er':
+                result_wars = ['恶人']
+            else:
+                result_wars = ['浩气']
+            war.append(result_wars)
 
         # 门派
         result_menpai = etree_html.xpath('//table//tr[' + str(i) + ']/td[4]/img/@src')
-        menpai.append(result_menpai)
+        for item in result_menpai:
+            result_menpais = re.findall(r'(\w{2}).gif', item)
+            menpai.append(result_menpais)
 
         # 大区
         result_daqu = etree_html.xpath('//table//tr[' + str(i) + ']/td[5]/text()')
@@ -61,17 +74,44 @@ def pares_html(content):
         #     if not result_score:
         #         result_score = etree_html.xpath('//table//tr[' + str(i) + ']/td[6]//strong/text()')
         score.append(result_score)
-    return names
+
+    return menpai
+    # return {'name': names, 'war': war, 'menpai': menpai, 'daqu': daqu, 'server': server, 'score': score}
+
+
+def db_conn():
+    db = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123456', charset='utf8', database='jx3')
+
+    return db
+
+
+def insert_to_database(cur, result):
+
+    for index in range(len(result['name'])):
+        print(result['score'][index][0])
+        sql = 'insert into zili (name, war, menpai, daqu, server, score) values ("%s", "%s", "%s", "%s", "%s", "%s")' % (result['name'][index][0],
+                                                                                                                         result['war'][index][0],
+                                                                                                                         result['menpai'][index][0],
+                                                                                                                         result['daqu'][index][0],
+                                                                                                                         result['server'][index][0],
+                                                                                                                         result['score'][index][0])
+
+
+        cur.execute(sql)
+    print('加入%s条数据' % index)
 
 
 def main():
     html = get_page(url)
     result = pares_html(html)
-
-    return result
+    print(result)
+    # db = db_conn()
+    # cur = db.cursor()
+    # insert_to_database(cur, result)
+    # db.commit()
+    # db.close()
 
 
 if __name__ == '__main__':
     url = 'http://jx3yymj.com/index.php?mid=bd'
-    print(main())
-    print(len(main()))
+    main()
