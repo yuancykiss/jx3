@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from experience import views
+
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^qiyu/', include('qiyu.urls', namespace='qiyu')),
+    # url(r'^experience/', views.ExperienceView.as_view()),
     url(r'^experience/', include('experience.urls', namespace='experience')),
-
 ]

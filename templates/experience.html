@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">-->
    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body{
+            background: #F3F3FA;
+        }
+
+    </style>
 </head>
 <body>
-    <div style="position: relative;top:10px;" align="center">
+
+
+    <div style="position: relative;top:30px;" align="center">
         <button type="button" class="btn btn-primary">首页</button>
         <button type="button" class="btn btn-success">奇遇查询</button>
         <button type="button" class="btn btn-info">资历榜单</button>
@@ -16,35 +26,31 @@
         <button type="button" class="btn btn-danger">茶馆闲坐</button>
     </div>
 
-    <p align="center" style="position:relative;font-size:30px; top:10px;">欢迎进入资历页面</p>
-    <table class="table">
-        <tr align="center">
-          <td class="active">id</td>
+    <p align="center" style="position:relative;font-size:30px; top:60px;">资历榜单</p>
+    <table class="table" style="position:relative; top:120px; width: 70%" align="center">
+        <tr align="center" style="color:red;">
+            <td class="info">排名</td>
+          <td class="active">角色名</td>
           <td class="success">阵营</td>
           <td class="warning">门派</td>
-          <td class="danger">阵营</td>
-          <td class="info">大区</td>
+          <td class="danger">大区</td>
+          <td class="info">服务器</td>
             <td class="active">资历</td>
         </tr>
+        {% for player in list %}
         <tr align="center">
-          <td class="active">...</td>
-          <td class="success">...</td>
-          <td class="warning">...</td>
-          <td class="danger">...</td>
-          <td class="info">...</td>
-            <td class="active">...</td>
+          <td class="info">{{ player.rank }}</td>
+          <td class="active">{{ player.name }}</td>
+          <td class="success">{{ player.war }}</td>
+          <td class="warning">{{ player.menpai }}</td>
+          <td class="danger">{{ player.daqu }}</td>
+          <td class="info">{{ player.server }}</td>
+            <td class="active">{{ player.score }}</td>
         </tr>
-        <tr>
-          <td class="active">...</td>
-          <td class="success">...</td>
-          <td class="warning">...</td>
-          <td class="danger">...</td>
-          <td class="info">...</td>
-            <td class="active">...</td>
-        </tr>
+        {% endfor %}
     </table>
 
-    <div align="center" style="position: absolute; bottom:0; left:45%">
+    <div align="center" style="position: absolute" >
         <address>
           <strong>双线一区--念破</strong><br>
           <abbr title="Phone">QQ:</abbr> 1186921650
