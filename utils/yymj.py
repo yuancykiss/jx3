@@ -15,6 +15,11 @@ def get_page(url):
 
 
 def to_menpai(menpai):
+    """
+    将门派转换成中文
+    :param menpai:
+    :return:
+    """
     if menpai == 'qx':
         return '七秀'
     elif menpai == 'wh':
@@ -46,6 +51,11 @@ def to_menpai(menpai):
 
 
 def pares_html(content):
+    """
+    用xpath解析html，组装成字典{'name':[], 'menpai':[].....}
+    :param content:
+    :return: player_info_dict
+    """
     etree_html = etree.HTML(content)
     names = []
     war = []
@@ -70,6 +80,7 @@ def pares_html(content):
         war.append(result_war)
 
         # 门派
+        # 苍云门派代号为cy2，不适合切片，故用正则代替
         result_menpai = re.findall(r'm_(\w+)\.gif', etree_html.xpath('//table//tr[' + str(i) + ']/td[4]/img/@src')[0])[0]
         menpai.append(to_menpai(result_menpai))
 
@@ -90,13 +101,22 @@ def pares_html(content):
 
 
 def db_conn():
+    """
+    取数据库连接, 游标
+    :return: db, cur
+    """
     db = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123456', charset='utf8', database='jx3')
-
-    return db
+    cur = db.cursor()
+    return (db, cur)
 
 
 def insert_to_database(cur, result):
-
+    """
+    写入数据到数据库
+    :param cur:
+    :param result:
+    :return:
+    """
     for index in range(len(result['name'])):
         sql = 'insert into zili (name, war, menpai, daqu, server, score) values ("%s", "%s", "%s", "%s", "%s", "%s")' % (result['name'][index],
                                                                                                                          result['war'][index],
@@ -111,6 +131,12 @@ def insert_to_database(cur, result):
 
 
 def init_db(db, cur):
+    """
+    初始化：在每次爬取前，先清空数据库中的资历表
+    :param db:
+    :param cur:
+    :return:
+    """
     sql = 'truncate table zili'
     cur.execute(sql)
     db.commit()
@@ -119,8 +145,7 @@ def init_db(db, cur):
 def main():
     html = get_page(url)
     result = pares_html(html)
-    db = db_conn()
-    cur = db.cursor()
+    db, cur = db_conn()
 
     init_db(db, cur)
 
