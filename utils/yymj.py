@@ -14,6 +14,37 @@ def get_page(url):
     return None
 
 
+def to_menpai(menpai):
+    if menpai == 'qx':
+        return '七秀'
+    elif menpai == 'wh':
+        return '万花'
+    elif menpai == 'cy':
+        return '纯阳'
+    elif menpai == 'tc':
+        return '天策'
+    elif menpai == 'sl':
+        return '少林'
+    elif menpai == 'wd':
+        return '五毒'
+    elif menpai == 'cj':
+        return '藏剑'
+    elif menpai == 'tm':
+        return '唐门'
+    elif menpai == 'mj':
+        return '明教'
+    elif menpai == 'gb':
+        return '丐帮'
+    elif menpai == 'cy2':
+        return '苍云'
+    elif menpai == 'cg':
+        return '长歌'
+    elif menpai == 'bd':
+        return '霸刀'
+    elif menpai == 'bl':
+        return '蓬莱'
+
+
 def pares_html(content):
     etree_html = etree.HTML(content)
     names = []
@@ -24,59 +55,38 @@ def pares_html(content):
     score = []
     for i in range(2, 202):
         # id
-        result = etree_html.xpath('//table//tr[' + str(i) + ']/td[2]/text()')
-        if not result:
-            result = etree_html.xpath('//table//tr[' + str(i) + ']/td[2]//span/text()')
-            if not result:
-                result = etree_html.xpath('//table//tr[' + str(i) + ']/td[2]/font/strong/text()')
-        names.append(result)
+        result_name = etree_html.xpath('//table//tr[' + str(i) + ']/td[2]//text()')[0].strip()
+        names.append(result_name)
 
         # 阵营
-        result_war = etree_html.xpath('//table//tr[' + str(i) + ']/td[3]/img/@src')
-        if not result_war:
-            result_war = etree_html.xpath('//table//tr[' + str(i) + ']/td[3]/text()')
-        for item in result_war:
-            result_wars = re.findall(r'.*?(\w{2}).gif', item)
-            if not result_wars:
-                result_wars = ['中立']
-            elif result_wars[0] == 'er':
-                result_wars = ['恶人']
+        try:
+            result_war = etree_html.xpath('//table//tr[' + str(i) + ']/td[3]/img/@src')[0][-6:-4]
+            if result_war == 'er':
+                result_war = '恶人谷'
             else:
-                result_wars = ['浩气']
-            war.append(result_wars)
+                result_war = '浩气盟'
+        except IndexError:
+            result_war = '中立'
+        war.append(result_war)
 
         # 门派
-        result_menpai = etree_html.xpath('//table//tr[' + str(i) + ']/td[4]/img/@src')
-        for item in result_menpai:
-            result_menpais = re.findall(r'(\w{2}).gif', item)
-            menpai.append(result_menpais)
+        result_menpai = re.findall(r'm_(\w+)\.gif', etree_html.xpath('//table//tr[' + str(i) + ']/td[4]/img/@src')[0])[0]
+        menpai.append(to_menpai(result_menpai))
 
         # 大区
-        result_daqu = etree_html.xpath('//table//tr[' + str(i) + ']/td[5]/text()')
-        if not result_daqu:
-            result_daqu = etree_html.xpath('//table//tr[' + str(i) + ']/td[5]/strong/span/text()')
-            if not result_daqu:
-                result_daqu = etree_html.xpath('//table//tr[' + str(i) + ']/td[5]/font/strong/text()')
+        result_daqu = etree_html.xpath('//table//tr[' + str(i) + ']/td[5]//text()')[0].strip()
         daqu.append(result_daqu)
 
         # 服务器
-        result_server = etree_html.xpath('//table//tr[' + str(i) + ']/td[6]/text()')
-        if not result_server:
-            result_server = etree_html.xpath('//table//tr[' + str(i) + ']/td[6]//span/text()')
-            if not result_server:
-                result_server = etree_html.xpath('//table//tr[' + str(i) + ']/td[6]//strong/text()')
+        result_server = etree_html.xpath('//table//tr[' + str(i) + ']/td[6]//text()')[0].strip()
         server.append(result_server)
 
         # 资历
-        result_score = etree_html.xpath('//table//tr[' + str(i) + ']/td[7]/text()')
-        if not result_score:
-            result_score = etree_html.xpath('//table//tr[' + str(i) + ']/td[7]//span/text()')
-        #     if not result_score:
-        #         result_score = etree_html.xpath('//table//tr[' + str(i) + ']/td[6]//strong/text()')
+        result_score = etree_html.xpath('//table//tr[' + str(i) + ']/td[7]//text()')[0].strip()
         score.append(result_score)
 
-    return menpai
-    # return {'name': names, 'war': war, 'menpai': menpai, 'daqu': daqu, 'server': server, 'score': score}
+    # print(menpai)
+    return {'name': names, 'war': war, 'menpai': menpai, 'daqu': daqu, 'server': server, 'score': score}
 
 
 def db_conn():
@@ -88,30 +98,38 @@ def db_conn():
 def insert_to_database(cur, result):
 
     for index in range(len(result['name'])):
-        print(result['score'][index][0])
-        sql = 'insert into zili (name, war, menpai, daqu, server, score) values ("%s", "%s", "%s", "%s", "%s", "%s")' % (result['name'][index][0],
-                                                                                                                         result['war'][index][0],
-                                                                                                                         result['menpai'][index][0],
-                                                                                                                         result['daqu'][index][0],
-                                                                                                                         result['server'][index][0],
-                                                                                                                         result['score'][index][0])
+        sql = 'insert into zili (name, war, menpai, daqu, server, score) values ("%s", "%s", "%s", "%s", "%s", "%s")' % (result['name'][index],
+                                                                                                                         result['war'][index],
+                                                                                                                         result['menpai'][index],
+                                                                                                                         result['daqu'][index],
+                                                                                                                         result['server'][index],
+                                                                                                                         result['score'][index])
 
 
         cur.execute(sql)
     print('加入%s条数据' % index)
 
 
+def init_db(db, cur):
+    sql = 'truncate table zili'
+    cur.execute(sql)
+    db.commit()
+
+
 def main():
     html = get_page(url)
     result = pares_html(html)
-    print(result)
-    # db = db_conn()
-    # cur = db.cursor()
-    # insert_to_database(cur, result)
-    # db.commit()
-    # db.close()
+    db = db_conn()
+    cur = db.cursor()
+
+    init_db(db, cur)
+
+    insert_to_database(cur, result)
+    db.commit()
+    db.close()
 
 
 if __name__ == '__main__':
-    url = 'http://jx3yymj.com/index.php?mid=bd'
+    # url = 'http://jx3yymj.com/index.php?mid=bd'
+    url = 'http://jx3yymj.com/index.php?document_srl=629980&mid=bd'
     main()

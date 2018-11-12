@@ -6,17 +6,13 @@ from django.views import View
 # import os, django
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'jx3.settings')# project_name 项目名称
 # django.setup()
-#
+
 # def index(request):
 #     if request.method == 'GET':
 #         return render(request, 'experience.html')
 from rest_framework.views import APIView
 
 from experience.models import Experience
-
-
-# class APIView(View):
-#     pass
 
 
 class ExperienceView(APIView):
@@ -27,6 +23,7 @@ class ExperienceView(APIView):
 
     def get(self, request, *args, **kwargs):
         list = Experience.objects.all()
+        print(111)
         return render(request, 'experience.html', {"list": list})
 
     def post(self, request, *args, **kwargs):
