@@ -7,6 +7,11 @@ from lxml import etree
 
 
 def get_page(url):
+    """
+    获取html页面
+    :param url:
+    :return:
+    """
     response = requests.get(url)
     if response.status_code == 200:
         html = response.text
