@@ -130,7 +130,8 @@ USE_TZ = True
 # #     os.path.join(BASE_DIR, 'static')
 # # ]
 
-STATIC_URL = 'static'
+STATIC_URL = '/static/'
 STATICFILES_DIR = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),
+    '/home/yuancy/static/'
 ]
