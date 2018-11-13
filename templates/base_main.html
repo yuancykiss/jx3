@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+资历
+{% endblock %}
+
+{% block css %}
+    {% load static %}
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block js %}
+{% load static %}
+    <script src="{% static 'js/background.js' %}"></script>
+    <script src="{% static 'js/background.min.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+
+    <div style="position: relative;top:30px;" align="center">
+        <button type="button" class="btn btn-primary">首页</button>
+        <button type="button" class="btn btn-success">奇遇查询</button>
+        <button type="button" class="btn btn-info">资历榜单</button>
+        <button type="button" class="btn btn-warning">宠物攻略</button>
+        <button type="button" class="btn btn-danger">茶馆闲坐</button>
+    </div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

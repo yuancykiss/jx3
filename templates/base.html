@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    {% load static %}
+    {% block css %}
+    {% endblock %}
+
+    {% block js %}
+    {% endblock %}
+</head>
+<body>
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+{% endblock %}
+
+
+{% block footer %}
+<!--<div style="position: fixed" >-->
+        <!--<address>-->
+          <!--<strong>双线一区&#45;&#45;念破</strong><br>-->
+          <!--<abbr title="Phone">QQ:</abbr> 1186921650-->
+        <!--</address>-->
+
+        <!--<address>-->
+          <!--<strong>-->
+          <!--偷塔李天王</strong><br>-->
+          <!--<a href="mailto:#">cuit2017@163.com</a>-->
+        <!--</address>-->
+    <!--</div>-->
+
+{% endblock %}
+</body>
+</html>
