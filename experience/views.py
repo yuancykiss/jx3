@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -22,8 +23,13 @@ class ExperienceView(APIView):
     #     return func(self, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        list = Experience.objects.all()
-        print(111)
+        list1 = Experience.objects.all()
+        paginator = Paginator(list1, 40)
+        try:
+            page = int(request._request.GET.get('page'))
+        except:
+            page = int(1)
+        list = paginator.page(page)
         return render(request, 'experience.html', {"list": list})
 
     def post(self, request, *args, **kwargs):
