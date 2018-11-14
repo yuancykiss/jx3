@@ -5,5 +5,5 @@ from qiyu import views
 
 urlpatterns = [
     # 欢迎界面
-    url(r'^index/', views.index, name='index'),
+    url(r'^index/', views.QiyuView.as_view()),
 ]

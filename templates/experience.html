@@ -3,38 +3,11 @@
 
 {% block css %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/expreience.css' %}">
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-
-<style>
-body{
-    background: #F3F3FA;
-    background-image:url("{% static 'image/05.jpg' %}");
-}
-#background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity:0.5;
-    z-index: -100;
-}
-.pagination{
-    font-size:16px;
-    position: absolute;
-    left:15%;
-    height:50px;
-    width: 70%;
-    text-align:center;
-    top: 1724px;
-    line-height:50px;
-    opacity:0.6;
-    background:white;
-}
-</style>
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/experience.css' %}">
 {% endblock %}
 
 {% block content %}
-<canvas id="background"></canvas>
 
     <p align="center" style="position:relative;font-size:30px; top:65px;">资 历 榜 单</p>
     <p align="center" style="position:relative;font-size:15px; top:65px;">(2018.11)</p>

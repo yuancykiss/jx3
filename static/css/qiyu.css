@@ -1,0 +1,19 @@
+
+    form{
+    position:relative;
+        top:150px;
+        width:50%;
+        left:25%;
+
+    }
+
+    p{
+        position:absolute;
+        width:20%;
+        height:30px;
+        left:40%;
+        top:100px;
+        font-size:30px;
+    }
+
+

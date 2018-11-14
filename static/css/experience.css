@@ -1,0 +1,13 @@
+
+.pagination{
+    font-size:16px;
+    position: absolute;
+    left:15%;
+    height:50px;
+    width: 70%;
+    text-align:center;
+    top: 1724px;
+    line-height:50px;
+    opacity:0.6;
+    background:white;
+}

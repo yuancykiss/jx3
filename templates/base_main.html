@@ -7,26 +7,41 @@
 
 {% block css %}
     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/expreience.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <style>
+        body{
+        background-image:url("{% static 'image/05.jpg' %}");
+    }
+    </style>
+{% endblock %}
+
+{% block js %}
+    {% load static %}
+    <script src="{% static 'js/background.js' %}"></script>
+    <script src="{% static 'js/background.min.js' %}"></script>
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {% endblock %}
 
-{% block js %}
-{% load static %}
-    <script src="{% static 'js/background.js' %}"></script>
-    <script src="{% static 'js/background.min.js' %}"></script>
-{% endblock %}
-
 {% block header %}
 
-    <div style="position: relative;top:30px;" align="center">
-        <button type="button" class="btn btn-primary">首页</button>
-        <button type="button" class="btn btn-success">奇遇查询</button>
-        <button type="button" class="btn btn-info">资历榜单</button>
-        <button type="button" class="btn btn-warning">宠物攻略</button>
-        <button type="button" class="btn btn-danger">茶馆闲坐</button>
+    <div style="position: relative;top:20px;z-index:99;" align="center">
+        <a class="btn btn-primary" href="#" role="button">首页</a>
+        <a class="btn btn-success" href="/experience/index" role="button">资历榜单</a>
+        <a class="btn btn-info" href="/qiyu/index" role="button">奇遇查询</a>
+        <a class="btn btn-warning" href="#" role="button">宠物攻略</a>
+        <a class="btn btn-danger" href="#" role="button">茶馆闲坐</a>
     </div>
+    <div class="my_header">
+
+    </div>
+
+<canvas id="background"></canvas>
+
 {% endblock %}
 
 {% block content %}
+
 {% endblock %}
