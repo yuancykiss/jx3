@@ -127,7 +127,8 @@ def insert_to_database(cur, result):
                                                                                                                          result['war'][index],
                                                                                                                          result['menpai'][index],
                                                                                                                          result['daqu'][index],
-                                                                                                                         result['server'][index],
+                                                                                                                         
+                result['server'][index],
                                                                                                                          result['score'][index])
 
 

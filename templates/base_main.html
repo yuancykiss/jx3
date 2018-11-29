@@ -14,6 +14,18 @@
         body{
         background-image:url("{% static 'image/05.jpg' %}");
     }
+        .btn{
+            margin-left:20px;
+            width:8%;
+            height:40px;
+            opacity: 0.8;
+            ling-height:45px;
+            font-size:16px;
+        }
+
+        .btn:hover{
+            border-bottom:2px;
+        }
     </style>
 {% endblock %}
 
@@ -28,9 +40,9 @@
 {% block header %}
 
     <div style="position: relative;top:20px;z-index:99;" align="center">
-        <a class="btn btn-primary" href="#" role="button">首页</a>
-        <a class="btn btn-success" href="/experience/index" role="button">资历榜单</a>
-        <a class="btn btn-info" href="/qiyu/index" role="button">奇遇查询</a>
+        <a class="btn btn-primary" href="#" role="button" href="/index">首页</a>
+        <a class="btn btn-success" href="/experience/index" role="button" >资历榜单</a>
+        <a class="btn btn-info" href="/qiyu/index" role="button" >奇遇查询</a>
         <a class="btn btn-warning" href="#" role="button">宠物攻略</a>
         <a class="btn btn-danger" href="#" role="button">茶馆闲坐</a>
     </div>

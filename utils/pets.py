@@ -85,7 +85,8 @@ def insert_to_database(cur, result):
     :return:
     """
     for index in range(len(result['ids'])):
-        sql = 'insert into pets (id, name, category, image, method, stars, score, share, views, detail) values ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")' % (result['ids'][index],
+        # sql = 'insert into pets (id, name, category, image, method, stars, score, share, views, detail) values ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")' % (result['ids'][index],
+        sql = 'insert into pets values ("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")' % (result['ids'][index],
                                                                                                                          result['names'][index],
                                                                                                                          result['categorys'][index],
                                                                                                                          result['images'][index],

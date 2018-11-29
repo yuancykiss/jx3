@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^qiyu/', include('qiyu.urls', namespace='qiyu')),
     # url(r'^experience/', views.ExperienceView.as_view()),
     url(r'^experience/', include('experience.urls', namespace='experience')),
+    url(r'^index/', include('actor.urls', namespace='index'))
 ]

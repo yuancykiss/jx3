@@ -10,10 +10,10 @@
 <link rel="stylesheet" href="{% static 'css/qiyu.css' %}">
     <style>
         .form-control{
-        position:relative;
-           display:inline-block;
-           width:23%;
-    }
+            position:relative;
+            display:inline-block;
+            width:23%;
+        }
 </style>
 {% endblock %}
 
@@ -27,21 +27,45 @@
 {% block content %}
 <p align="center">奇遇查询</p>
 
-<form align="center">
+<form align="center" method="post">
   <select class="form-control">
-      <option value="daqu">电信一区</option>
+      {% for daqu in daqus %}
+      <option value="daqu">{{ daqu.name }}</option>
+      {% endfor %}
   </select>
     <select class="form-control">
-      <option value="server">长安城</option>
+        {% for server in servers %}
+      <option value="server">{{ server.name }}</option>
+        {% endfor %}
     </select>
     <select class="form-control">
-      <option value="qiyu_category">绝世奇遇</option>
+      <option value="qiyu_category">奇遇类型</option>
     </select>
     <select class="form-control">
-      <option value="qiyu_name">三山四海</option>
+      <option value="qiyu_name">奇遇名称</option>
     </select>
     <input type="text" class="form-control" name="player_name" placeholder="或者输入角色查询" style="top:10px;">
-  <button type="submit" class="btn btn-default" style="position:relative;top:9px;left:20px;">查询</button>
+    <input type="submit" class="btn btn-default" style="position:relative;top:9px;left:20px;height:35px;">
 </form>
+<table class="table table-condensed" style="position:absolute;;width:70%;left:15%;top:350px;background:red;opacity:0.5;">
+  <tr class="success" style="color:red;">
+    <td>序号</td>
+    <td>大区</td>
+    <td>服务器</td>
+    <td>奇遇</td>
+    <td>角色</td>
+    <td>时间</td>
+  </tr>
+    {% for item in result %}
+    <tr class="success">
+        <td>{{ forloop.counter }}</td>
+        <td>{{ item.region }}</td>
+        <td>{{ item.server }}</td>
+        <td>{{ item.serendipity }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.time}}</td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
 
