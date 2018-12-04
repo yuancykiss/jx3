@@ -97,7 +97,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': [
-            'redis://144.34.138.116:6379/0',
+            'redis://xxxxxx:6379/0',
         ],
         'KEY_PREFIX': 'jx3',
         'OPTIONS': {
@@ -112,7 +112,7 @@ CACHES = {
     'page': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': [
-            'redis://144.34.138.116:6379/1',
+            'redis://xxxxxx:6379/1',
         ],
         'KEY_PREFIX': 'jx3:page',
         'OPTIONS': {
@@ -127,7 +127,7 @@ CACHES = {
     'session': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': [
-            'redis://144.34.138.116:6379/2',
+            'redis://xxxxxx:6379/2',
         ],
         'KEY_PREFIX': 'jx3:session',
         'TIMEOUT': 1209600,
@@ -143,7 +143,7 @@ CACHES = {
     'code': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': [
-            'redis://144.34.138.116:6379/3',
+            'redis://xxxxxx:6379/3',
         ],
         'KEY_PREFIX': 'jx3:code:tel',
         'OPTIONS': {
