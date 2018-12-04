@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'utils.middlewares.my_middleware',
 ]
 
 ROOT_URLCONF = 'jx3.urls'
@@ -88,6 +89,76 @@ DATABASES = {
 
     }
 }
+
+
+# 配置基于Redis的缓存系统
+CACHES = {
+    # 默认缓存
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': [
+            'redis://144.34.138.116:6379/0',
+        ],
+        'KEY_PREFIX': 'jx3',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'CONNECTION_POOL_KWARGS': {
+                'max_connections': 1000,
+            },
+        'PASSWORD': '123456',
+        }
+    },
+    # ⻚页面面缓存
+    'page': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': [
+            'redis://144.34.138.116:6379/1',
+        ],
+        'KEY_PREFIX': 'jx3:page',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'CONNECTION_POOL_KWARGS': {
+                'max_connections': 500,
+            },
+        'PASSWORD': '123456',
+        }
+    },
+    # 会话缓存
+    'session': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': [
+            'redis://144.34.138.116:6379/2',
+        ],
+        'KEY_PREFIX': 'jx3:session',
+        'TIMEOUT': 1209600,
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'CONNECTION_POOL_KWARGS': {
+                'max_connections': 2000,
+            },
+        'PASSWORD': '123456',
+        }
+    },
+    # 验证码缓存
+    'code': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': [
+            'redis://144.34.138.116:6379/3',
+        ],
+        'KEY_PREFIX': 'jx3:code:tel',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'CONNECTION_POOL_KWARGS': {
+                'max_connections': 500,
+            },
+        'PASSWORD': '123456',
+        }
+    },
+}
+
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'session'
 
 
 # Password validation

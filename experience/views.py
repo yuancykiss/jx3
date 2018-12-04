@@ -1,26 +1,16 @@
+
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.db.models import Count
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
-from django.views import View
-# import os, django
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'jx3.settings')# project_name 项目名称
-# django.setup()
-
-# def index(request):
-#     if request.method == 'GET':
-#         return render(request, 'experience.html')
 from rest_framework.views import APIView
 
 from experience.models import Experience
 
 
 class ExperienceView(APIView):
-
-    # def dispatch(self, request, *args, **kwargs):
-    #     func = getattr(self, request.method)
-    #     return func(self, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         list1 = Experience.objects.all()
@@ -32,8 +22,18 @@ class ExperienceView(APIView):
         list = paginator.page(page)
         return render(request, 'experience.html', {"list": list})
 
+
     def post(self, request, *args, **kwargs):
-        data = request.POST
+        data = request.POST.get('aa')
         expreience = Experience.objects.all().first()
         print(expreience)
         return HttpResponse('this is POST')
+
+
+class CountInfo(APIView):
+    def get(self, request, *args, **kwargs):
+        count_info = request.GET.get('info')
+        print(count_info)
+        result = Experience.objects.values(count_info).all().annotate(count=Count(count_info))
+        results = [(item[count_info], item['count']) for item in result]
+        return JsonResponse({'info': results})

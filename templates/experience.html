@@ -2,13 +2,14 @@
 
 
 {% block css %}
-{% load static %}
-{{ block.super }}
-<link rel="stylesheet" href="{% static 'css/experience.css' %}">
+    {% load static %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/experience.css' %}">
 {% endblock %}
 
-{% block content %}
 
+{% block content %}
+<div id="bangdan">
     <p align="center" style="position:relative;font-size:30px; top:65px;">资 历 榜 单</p>
     <p align="center" style="position:relative;font-size:15px; top:65px;">(2018.11)</p>
     <table class="table" style="position:relative; top:100px; width: 70%;opacity:0.75;" align="center">
@@ -51,4 +52,8 @@
         {% endif %}
     </span>
     </div>
+</div>
+<div id="menpai">
+
+</div>
 {% endblock %}
